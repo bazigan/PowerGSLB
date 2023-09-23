@@ -1,4 +1,4 @@
-> From acudovs - [powergslb](https://github.com/acudovs/powergslb).
+> From acudovs - [powergslb](https://github.com/acudovs/powergslb)
 
 
 # PowerGSLB
@@ -82,3 +82,37 @@ firewall-cmd --permanent --add-service=dns --permanent
 firewall-cmd --reload
 firewall-cmd --list-all
 ```
+
+## Cara Penggunaan
+Berikut topologi yang digunakan sebagai contoh:
+![Topologi](dokumentasi/topologi.png)
+
+Akses `https://IP-server/admin`:
+![akses web admin](dokumentasi/dok1.png)
+
+> Saat pertama kali membuka PowerGSLB, pasti akan ada banyak template yang tersedia. Hapus template yang tidak digunakan pada menu Records terlebih dahulu, kemudian hapus juga template pada menu Domains.
+
+Buat domain baru pada menu Domains:
+![buat domain baru](dokumentasi/dok2.png)
+
+Setelah itu klik menu Records dan buat record sesuai dengan kebutuhan. Pada contoh di bawah ini membuat record domain yang digunakan untuk dua buah web server:
+![buat record baru](dokumentasi/dok3.png)
+
+Pada saat pembuatan record baru, akan ada field monitor yang perlu di isi. Monitor ini merupakan metode yang digunakan PowerGSLB untuk menentukan arah atau pembagian sebuah trafik. Untuk membuatnya, klik menu Monitors:
+![buat monitor baru](dokumentasi/dok4.png)
+Setelah itu buat baru dengan klik Add New. Pada contoh di atas membuat dua buah Monitor baru yaitu Web1-Check dan Web2-Check dengan metode atau tipe http. 
+> Dengan metode tersebut, PowerGSLB akan melakukan permintaan HTTP ke URL yang telah ditentukan untuk menentukan server yang dituju hidup atau mati.
+
+Kemudian gunakan monitor yang telah dibuat pada record:
+![buat monitor baru](dokumentasi/dok5.png)
+Atur weight untuk mengatur prioritas, semakin besar nilai weight menunjukkan prioritas yang lebih tinggi.
+
+Pada menu status kita bisa melihat status dari record yang dibuat:
+![buat monitor baru](dokumentasi/dok6.png)
+![buat monitor baru](dokumentasi/dok7.png)
+
+Ketika server atau service web server tidak dapat dihubungi, maka statusnya akan berubah dan akses domain diubah ke server kedua:
+![buat monitor baru](dokumentasi/dok8.png)
+![buat monitor baru](dokumentasi/dok9.png)
+
+Untuk dokumentasi aslinya dapat dilihat di [powergslb](https://github.com/acudovs/powergslb)
