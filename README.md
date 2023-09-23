@@ -4,8 +4,38 @@
 # PowerGSLB
 PowerGSLB adalah service Global Server Load Balancing (GSLB). Global Server Load Balancing (GSLB) sendiri berguna untuk menentukan trafik dengan menggunakan service DNS. Berbeda dengan load balancing menggunakan reverse proxy, GSLB menentukan trafik dari dua server berdasarkan IP dan domain.
 
-PowerGSLB merupakan salah satu service pendukung dari PowerDNS yang berfungsi sebagai GSLB. PowerGSLB ini dapat diinstal pada sistem operasi CentOS 7.
+PowerGSLB merupakan salah satu service pendukung dari PowerDNS yang berfungsi sebagai GSLB. PowerGSLB ini dapat diinstal pada sistem operasi CentOS 7. Pada awalnya, PowerGSLB melakukan monitoring terhadap target yang telah ditentukan. Kemudian, PowerGSLB memiliki beberapa metode pengecekan yang bisa digunakan, diantaranya yaitu:
 
+1. **Exec**
+    
+    Metode ini melakukan pengecekan sebuah server tujuan yang hendak di load balance dengan mengeksekusi atau menjalankan sebuah perintah. Perintah yang telah ditentukan akan dijalankan pada server PowerGSLB. 
+    
+2. **ICMP**
+    
+    Dengan metode ini, server melakukan pengecekan dengan melakukan ping ke tujuan yang telah ditentukan.
+    
+3. **TCP**
+    
+    Metode ini melakukan pengecekan dengan percobaan koneksi TCP. Port yang dituju juga dapat ditentukan, seperti TCP port 25, 80, atau 443.
+    
+4. **HTTP**
+    
+    Metode ini melakukan pengecekan dengan permintaan HTTP. Metode ini cocok digunakan untuk load balance website dengan konten yang sama namun berbeda server atau IP address.
+    
+
+Selain metode pengecekan dalam monitoring, PowerGSLB juga menggunakan beberapa parameter dalam menentukan arah trafik, diantaranya yaitu:
+
+1. **Fallback**
+    
+    Berbeda dengan parameter lainnya, dengan parameter ini, PowerGSLB akan mendaftarkan beberapa record ke dalam satu domain. Ketika menggunakan Domain Information Groper atau ****dig, akan ada IP yang terdaftar dari beberapa tujuan. Dengan parameter ini juga down time akan lebih minimal dirasakan oleh klien.
+    
+2. **Persistence**
+    
+    Parameter ini berorientasi pada konsistensi koneksi ke satu server tujuan. Semisal terdapat dua IP atau server yang terdaftar dalam satu domain, ketika klien mengakses IP tersebut, PowerGSLB akan mengarahkan klien tersebut ke satu server secara konsisten. Kekurangan dari parameter ini adalah down time yang lebih terasa karena algoritmanya yang mempertahankan koneksi.
+    
+3. **Weight**
+    
+    Dengan parameter ini, klien akan diberikan jawaban alamat atau IP berdasarkan bobot yang diatur. Nilai yang lebih besar menunjukkan tingkat prioritasnya lebih tinggi.
 ## Instalasi
 ### Instal dan Setup PowerGSLB dan PowerDNS
 Siapkan dan atur manajer paket serta instal paket yang dibutuhkan nantinya:
